@@ -1,6 +1,6 @@
 /* Colores */
 :root {
-    --color-1: #F1402E;
+    --color-1: rgb(206, 19, 66);
     --color-2: #292929;
     --color-3: #ffffff;
     --color-4: #3875f0;
@@ -162,6 +162,22 @@ ul {
     margin-right: 2rem;
     overflow: hidden;
     box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
+    animation: shadow 3s infinite ease;
+}
+
+/* Efecto de rotación de la sombra */
+@keyframes shadow {
+    0% {
+        box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    100% {
+        box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .home__img img {
