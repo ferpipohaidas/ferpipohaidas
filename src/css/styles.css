@@ -462,3 +462,42 @@ ul {
     color: var(--color-2);
     font-family: 'Roboto', sans-serif;
 }
+
+@media screen and (max-width: 1080px) {
+    .skills {
+        flex-direction: column;
+        padding: 2rem 0;
+    }
+
+    .skills__img {
+        width: 80%;
+        padding: 3rem;
+        border-left: none;
+    }
+
+    .skills__table {
+        width: 100%;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .skills_container__vertical{
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .skills_card__content li {
+        font-size: 1rem;
+    }
+
+    .skills_card__title {
+        font-size: 1.2rem;
+    }
+
+    .skills_card {
+        padding: 2rem;
+    }
+    
+}
