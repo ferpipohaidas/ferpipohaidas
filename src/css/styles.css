@@ -321,6 +321,10 @@ ul {
     .home__title {
         text-align: center;
     }
+
+    .section{
+        padding-top: 5rem;
+    }
     
 }
 
@@ -338,6 +342,14 @@ ul {
     /* Centrado */
     text-align: justify;
     /* Justificado */
+}
+
+@media screen and (max-width: 768px) {
+    .about__text {
+        margin: 0 1rem;
+        font-size: 1.1rem;
+    }
+    
 }
 
 .argentina {
@@ -405,99 +417,3 @@ ul {
 }
 
 /* Skills */
-.skills {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.skills__img {
-    width: 30%;
-    padding-left: 3rem;
-    border-left: 1px solid var(--color-2);
-}
-
-.skills__table {
-    display: flex;
-    gap: 2rem;
-    width: 70%;
-    padding: 0 3rem;
-    align-items: center;
-    justify-content: center;
-}
-.skills_container__vertical{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.skills_card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    box-shadow: 0 4px 20px 3px rgba(165, 52, 52, 0.1);
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    transition: all 0.3s ease;
-    height: 100%;
-}
-.skills_card:hover {
-    /* efecto de rotación */
-    transform: scale(1.1);
-    transform: perspective(1000px) rotateY(10deg);
-    box-shadow: 0 8px 12px rgba(179, 57, 57, 0.1);
-}
-
-.skills_card__title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--color-2);
-    margin-bottom: 1rem;
-}
-
-.skills_card__content li {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--color-2);
-    font-family: 'Roboto', sans-serif;
-}
-
-@media screen and (max-width: 1080px) {
-    .skills {
-        flex-direction: column;
-        padding: 2rem 0;
-    }
-
-    .skills__img {
-        width: 80%;
-        padding: 3rem;
-        border-left: none;
-    }
-
-    .skills__table {
-        width: 100%;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .skills_container__vertical{
-        display: flex;
-        flex-direction: row;
-        gap: 2rem;
-    }
-
-    .skills_card__content li {
-        font-size: 1rem;
-    }
-
-    .skills_card__title {
-        font-size: 1.2rem;
-    }
-
-    .skills_card {
-        padding: 2rem;
-    }
-    
-}
