@@ -1,6 +1,6 @@
 /* Colores */
 :root {
-    --color-1: #1e7aaf;
+    --color-1: #56828e;
     --color-2: #292929;
     --color-3: #ffffff;
     --color-4: #3875f0;
@@ -17,12 +17,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Playfair Display', serif;
 }
 
 /* Estilos generales */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Playfair Display', serif;
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -119,6 +118,7 @@ ul {
 
 /* Section */
 .section {
+    font-family: 'Raleway', sans-serif;
     scroll-snap-align: start;
     min-height: 80vh;
     display: flex;
@@ -134,11 +134,11 @@ ul {
 }
 
 .section:nth-child(2) {
-    background-color: var(--color-2);
+    background-color: var(--color-3);
 }
 
 .section:nth-child(3) {
-    background-color: var(--color-3);
+    background-color: var(--color-2);
 }
 
 .section:nth-child(4) {
@@ -146,7 +146,7 @@ ul {
 }
 
 .section:nth-child(5) {
-    background-color: var(--color-2);
+    background-color: var(--color-3);
 }
 
 /* Home */
@@ -214,7 +214,7 @@ ul {
 .about__text {
     font-family: Arial, sans-serif;
     /* Fuente general */
-    color: var(--color-3);
+    color: var(--color-2);
     /* Color general */
     font-size: 1.4rem;
     /* Tamaño general */
@@ -226,26 +226,7 @@ ul {
     /* Justificado */
 }
 
-.argentina {
-    color: rgb(23, 125, 184);
-    /* Color para 'Argentina' */
-    font-weight: 700;
-    font-size: 2rem;
-}
-
-.argentina span {
-    color: var(--color-10);
-    /* Color general */
-    font-weight: 700;
-    font-size: 3rem;
-}
-
-.pipo {
-    color: var(--color-4);
-    /* Color para 'Pipo' */
-    font-weight: 700;
-}
-
+.pipo,
 .mathematics,
 .programming,
 .data-science,
@@ -254,36 +235,6 @@ ul {
 .ai {
     font-weight: bold;
     /* Negrita para resaltar */
-}
-
-.mathematics {
-    color: var(--color-5);
-    /* Color para 'mathematics' */
-}
-
-.programming {
-    color: var(--color-6);
-    /* Color para 'programming' */
-}
-
-.data-science {
-    color: var(--color-7);
-    /* Color para 'Data Science' */
-}
-
-.machine-learning {
-    color: var(--color-8);
-    /* Color para 'Machine Learning' */
-}
-
-.generative-ai {
-    color: var(--color-9);
-    /* Color para 'Generative AI' */
-}
-
-.ai {
-    color: var(--color-10);
-    /* Color para 'Artificial Intelligence' */
 }
 
 .about__img {
@@ -322,6 +273,7 @@ ul {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     transition: all 0.3s ease;
+    background-color: var(--color-3);
 }
 .skills_card:hover {
     /* efecto de rotación */
