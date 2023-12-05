@@ -14,3 +14,11 @@ function calcularEdad(fechaNacimiento) {
     return edad;
 }
 
+// hamburgerBtn
+const hamburgerBtn = document.querySelector('#hamburgerBtn');
+
+// Si se hace click en el botón, se agrega la clase 'active' al botón y al menú
+hamburgerBtn.addEventListener('click', function() {
+    hamburgerBtn.classList.toggle('hamburger-active');
+    document.querySelector('.navbar__menu').classList.toggle('navbar-active');
+});
