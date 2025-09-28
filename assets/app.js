@@ -69,12 +69,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Navbar background on scroll
     window.addEventListener('scroll', () => {
         const header = document.querySelector('header');
+        const currentTheme = document.body.getAttribute('data-theme');
+        
         if (window.scrollY > 100) {
-            header.style.background = 'rgba(10, 10, 10, 0.95)';
-            header.style.backdropFilter = 'blur(20px)';
+            if (currentTheme === 'light') {
+                header.style.background = 'rgba(248, 250, 252, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+            header.style.backdropFilter = 'blur(25px)';
         } else {
-            header.style.background = 'rgba(255, 255, 255, 0.05)';
-            header.style.backdropFilter = 'blur(20px)';
+            // Remover estilos inline para que use los CSS
+            header.style.background = '';
+            header.style.backdropFilter = '';
         }
     });
 
@@ -225,6 +232,80 @@ document.addEventListener('DOMContentLoaded', function() {
 function showMessage(message, type = 'info') {
     console.log(`[${type.toUpperCase()}] ${message}`);
 }
+
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+    const body = document.body;
+
+    // Check for saved theme preference or default to 'dark'
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    
+    // Apply saved theme
+    if (savedTheme === 'light') {
+        body.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fas fa-moon';
+        mobileThemeIcon.className = 'fas fa-moon';
+    } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fas fa-sun';
+        mobileThemeIcon.className = 'fas fa-sun';
+    }
+
+    // Function to handle theme change
+    function handleThemeChange(buttonElement, iconElement) {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update header background if scrolled
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+            if (newTheme === 'light') {
+                header.style.background = 'rgba(248, 250, 252, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        }
+        
+        // Update both icons with animation
+        themeIcon.style.transform = 'scale(0)';
+        mobileThemeIcon.style.transform = 'scale(0)';
+        
+        setTimeout(() => {
+            if (newTheme === 'light') {
+                themeIcon.className = 'fas fa-moon';
+                mobileThemeIcon.className = 'fas fa-moon';
+            } else {
+                themeIcon.className = 'fas fa-sun';
+                mobileThemeIcon.className = 'fas fa-sun';
+            }
+            themeIcon.style.transform = 'scale(1)';
+            mobileThemeIcon.style.transform = 'scale(1)';
+        }, 150);
+        
+        // Add ripple effect to the clicked button
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        buttonElement.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    }
+
+    // Theme toggle event listeners
+    themeToggle.addEventListener('click', (e) => {
+        handleThemeChange(themeToggle, themeIcon);
+    });
+
+    mobileThemeToggle.addEventListener('click', (e) => {
+        handleThemeChange(mobileThemeToggle, mobileThemeIcon);
+    });
 
 // Exportar funciones para uso global si es necesario
 window.ferpipohaidas = {
