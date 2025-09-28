@@ -78,27 +78,50 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Typing animation for hero title
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.textContent = '';
-        heroTitle.style.borderRight = '2px solid #b794f6';
-        
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            } else {
+    // Dynamic name typing animation
+    const dynamicNameElement = document.getElementById('dynamicName');
+    if (dynamicNameElement) {
+        const names = ['Fernando', 'Pipo'];
+        let currentNameIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let isPaused = false;
+
+        const typeSpeed = 100;
+        const deleteSpeed = 50;
+        const pauseDuration = 2000;
+
+        function typeNames() {
+            const currentName = names[currentNameIndex];
+            
+            if (!isDeleting && currentCharIndex < currentName.length) {
+                // Typing
+                dynamicNameElement.textContent = currentName.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                setTimeout(typeNames, typeSpeed);
+            } else if (isDeleting && currentCharIndex > 0) {
+                // Deleting
+                dynamicNameElement.textContent = currentName.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                setTimeout(typeNames, deleteSpeed);
+            } else if (!isDeleting && currentCharIndex === currentName.length) {
+                // Pause before deleting
+                isPaused = true;
                 setTimeout(() => {
-                    heroTitle.style.borderRight = 'none';
-                }, 1000);
+                    isPaused = false;
+                    isDeleting = true;
+                    typeNames();
+                }, pauseDuration);
+            } else if (isDeleting && currentCharIndex === 0) {
+                // Switch to next name
+                isDeleting = false;
+                currentNameIndex = (currentNameIndex + 1) % names.length;
+                setTimeout(typeNames, typeSpeed);
             }
-        };
-        
-        setTimeout(typeWriter, 1000);
+        }
+
+        // Start the animation after a short delay
+        setTimeout(typeNames, 1500);
     }
 
     // Form submission
