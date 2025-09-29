@@ -307,6 +307,31 @@ function showMessage(message, type = 'info') {
         handleThemeChange(mobileThemeToggle, mobileThemeIcon);
     });
 
+    // Profile Image Carousel
+    function initProfileCarousel() {
+        const images = document.querySelectorAll('.profile-img');
+        let currentImageIndex = 0;
+        
+        if (images.length === 0) return;
+        
+        function showNextImage() {
+            // Ocultar imagen actual
+            images[currentImageIndex].classList.remove('active');
+            
+            // Calcular siguiente índice
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            
+            // Mostrar nueva imagen
+            images[currentImageIndex].classList.add('active');
+        }
+        
+        // Iniciar carrusel automático
+        setInterval(showNextImage, 3000); // Cambiar cada 3 segundos
+    }
+    
+    // Inicializar carrusel cuando el DOM esté listo
+    initProfileCarousel();
+
 // Exportar funciones para uso global si es necesario
 window.ferpipohaidas = {
     showMessage: showMessage
