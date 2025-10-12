@@ -341,7 +341,10 @@ a:hover {
 .image-placeholder {
     width: 400px;
     height: 400px;
-    background-color: var(--color-primary);
+    /* Mostrar imagen de perfil */
+    background-image: url('../assets/profile.png');
+    background-size: cover;
+    background-position: center;
     border-radius: 8px;
     box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
 }
