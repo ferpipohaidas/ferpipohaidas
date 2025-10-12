@@ -91,4 +91,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Animaciones para la sección About con Intersection Observer
+    const aboutAnimations = () => {
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Activar animación
+                    entry.target.style.animationPlayState = 'running';
+                    // Dejar de observar
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos los elementos animados en About
+        const aboutSection = document.querySelector('#about');
+        if (aboutSection) {
+            const animatedElements = aboutSection.querySelectorAll(
+                '.about-card, .about-intro p, .journey-section h3, .timeline-item, .value-section'
+            );
+            
+            animatedElements.forEach(element => {
+                element.style.animationPlayState = 'paused';
+                observer.observe(element);
+            });
+        }
+    };
+
+    // Inicializar animaciones
+    aboutAnimations();
 });
