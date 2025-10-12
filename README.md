@@ -1,16 +1,18 @@
-## Hi there 👋
+# 👋 Hola, soy Fernando Haidas
 
-<!--
-**ferpipohaidas/ferpipohaidas** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Me especializo en construir soluciones de **Data Science y AI Engineering** que convierten datos en decisiones accionables y productos digitales con impacto.
 
-Here are some ideas to get you started:
+## 🚀 Perfil en breve
+- Desarrollo pipelines de datos y modelos de machine learning listos para producción, priorizando métricas de negocio.
+- Diseño experiencias digitales con enfoque en usabilidad y storytelling para destacar resultados y aprendizajes.
+- Lidero la colaboración entre áreas técnicas y stakeholders para acelerar la entrega de valor.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🧠 Especialidades
+- Machine Learning aplicado (clasificación, predicción, detección de anomalías).
+- Analítica avanzada y visualización para toma de decisiones.
+- MLOps, automatización y despliegue en la nube.
+- Desarrollo web orientado a portafolios de datos y dashboards.
+
+## 📬 Contacto
+- 💼 [LinkedIn](https://www.linkedin.com/in/ferpipohaidas/)
+- 🌐 [Website](https://ferpipohaidas.com/)

@@ -21,6 +21,112 @@ body {
     color: var(--color-primary);
     background-color: var(--color-dark);
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Esfera 1 - Izquierda inferior */
+body::before {
+    content: '';
+    position: fixed;
+    bottom: 10%;
+    left: 15%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(60px);
+    animation: float-sphere-1 18s ease-in-out infinite;
+}
+
+/* Esfera 2 - Derecha superior */
+body::after {
+    content: '';
+    position: fixed;
+    top: 20%;
+    right: 20%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(50px);
+    animation: float-sphere-2 22s ease-in-out infinite;
+}
+
+@keyframes float-sphere-1 {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(30px, -40px);
+    }
+    50% {
+        transform: translate(-20px, -60px);
+    }
+    75% {
+        transform: translate(40px, -30px);
+    }
+}
+
+@keyframes float-sphere-2 {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    33% {
+        transform: translate(-35px, 45px);
+    }
+    66% {
+        transform: translate(25px, 30px);
+    }
+}
+
+/* Esfera 3 - Centro */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(70px);
+    animation: float-sphere-3 25s ease-in-out infinite;
+}
+
+@keyframes float-sphere-3 {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    20% {
+        transform: translate(calc(-50% + 40px), calc(-50% - 30px));
+    }
+    40% {
+        transform: translate(calc(-50% - 30px), calc(-50% + 40px));
+    }
+    60% {
+        transform: translate(calc(-50% + 20px), calc(-50% + 50px));
+    }
+    80% {
+        transform: translate(calc(-50% - 40px), calc(-50% - 20px));
+    }
+}
+
+/* Asegurar que el contenido esté por encima del efecto */
+header, main {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -80,6 +186,30 @@ a:hover {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+}
+
+.logo-typing {
+    min-width: 120px; /* Ancho mínimo para "Fernando" */
+    display: inline-block;
+    color: var(--color-primary);
+    position: relative;
+}
+
+.logo-typing::after {
+    content: '|';
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
 }
 
 .nav-links {
@@ -105,7 +235,7 @@ a:hover {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--color-accent);
+    background-color: var(--color-primary); /* Cambiado a blanco */
     transition: width 0.3s ease;
 }
 
@@ -138,36 +268,196 @@ a:hover {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    text-align: center;
-    padding: 80px 0 40px; /* Espacio para el navbar y un poco de padding inferior */
+    padding: 80px 0 40px;
+}
+
+.hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-content {
+    text-align: left;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
 }
 
 .hero-content h2 {
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1.75rem;
+    font-weight: 300;
     color: var(--color-muted);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
 }
 
-.btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--color-accent);
-    color: var(--color-primary);
-    border: 1px solid var(--color-accent);
-    border-radius: 4px;
-    font-weight: 700;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.hero-content p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    color: var(--color-muted);
+    margin-left: 0;
+    margin-right: 0;
 }
 
-.btn:hover {
+.hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: slideInFromLeft 1.2s ease-out 0.3s both;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.image-placeholder {
+    width: 400px;
+    height: 400px;
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn.btn-cv {
     background-color: transparent;
-    color: var(--color-accent);
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    width: 200px;
+    height: 52px;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    line-height: 48px;
+    transition: background-color 0.4s ease, color 0.4s ease, transform 0.2s ease;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn.btn-cv span {
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.btn.btn-cv .text-hover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+}
+
+.btn.btn-cv:hover {
+    background-color: var(--color-primary);
+    color: var(--color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.btn.btn-cv:active {
+    transform: translateY(0);
+}
+
+.btn.btn-cv:hover .text-original {
+    transform: translateY(-100%);
+}
+
+.btn.btn-cv:hover .text-hover {
+    transform: translateY(-100%);
+}
+
+.btn.btn-contact {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    color: var(--color-dark);
+    width: 200px;
+    height: 52px;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease, transform 0.2s ease;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn.btn-contact:hover {
+    background-color: transparent;
+    color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.btn.btn-contact:active {
+    transform: translateY(0);
+}
+
+/* Nuevos estilos para el bloque de redes sociales en hero-content */
+.hero-social {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-social a {
+  font-size: 1.5rem;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.hero-social a:hover {
+  color: #0077b5;
+}
+
+/* Centrar hero-social en pantallas pequeñas */
+@media (max-width: 768px) {
+  .hero-social {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 /* --- Media Queries --- */
@@ -212,26 +502,114 @@ a:hover {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
     .hero-content h1 {
-        font-size: 2.8rem;
+        font-size: 3rem;
     }
 
     .hero-content h2 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .image-placeholder {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn.btn-cv {
+        width: 180px;
+        height: 48px;
+        line-height: 44px;
+        font-size: 0.95rem;
+    }
+
+    .btn.btn-contact {
+        width: 180px;
+        height: 48px;
+        font-size: 0.95rem;
+    }
+
+    .hero-buttons {
+        gap: 0.75rem;
     }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
+    .hero-layout {
+        gap: 2rem;
+    }
+
     .hero-content h1 {
-        font-size: 2.2rem;
+        font-size: 2.25rem;
+        letter-spacing: -0.01em;
     }
 
     .hero-content h2 {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
+    }
+
+    .hero-content p {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+
+    .image-placeholder {
+        width: 250px;
+        height: 250px;
     }
 
     .nav-links {
         width: 80%;
+    }
+
+    .btn.btn-cv {
+        width: 170px;
+        height: 46px;
+        line-height: 42px;
+        font-size: 0.9rem;
+    }
+
+    .btn.btn-contact {
+        width: 170px;
+        height: 46px;
+        font-size: 0.9rem;
+    }
+
+    .hero-buttons {
+        gap: 0.5rem;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    .logo-typing {
+        min-width: 100px;
     }
 }
