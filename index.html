@@ -124,8 +124,36 @@
         <!-- Contacto -->
         <section id="contact" class="section contact">
             <div class="container">
-                <h2>Contacto</h2>
-                <!-- Formulario o info de contacto próximamente -->
+                <div class="contact-card">
+                    <h2 class="contact-title">Contacto</h2>
+                    <p class="contact-subtitle">¿Tenes una <span class="highlight">idea</span> o un <span class="highlight">proyecto</span> en mente? Mándame un mensaje.</p>
+                    <form id="contactForm" class="contact-form" novalidate>
+                        <div class="form-row">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="tu@ejemplo.com" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" rows="6" placeholder="Escribe tu mensaje..." required style="resize: none;"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-contact">Enviar</button>
+                        </div>
+                    </form>
+                    <div id="successMessage" class="success-message" aria-live="polite" style="display:none"></div>
+                </div>
+
+                <!-- Overlay de estado (éxito/error) -->
+                <div id="formStatus" class="form-status" aria-hidden="true">
+                    <div class="form-status-card" role="status">
+                        <div id="formStatusIcon" class="status-icon"></div>
+                        <h3 id="formStatusTitle">Estado</h3>
+                        <p id="formStatusMessage">Mensaje</p>
+                        <div class="form-status-actions">
+                            <button id="formStatusClose" class="btn">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

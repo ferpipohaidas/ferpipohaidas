@@ -126,4 +126,200 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializar animaciones
     aboutAnimations();
+
+    // --- Formulario de contacto ---
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    const formStatusTitle = document.getElementById('formStatusTitle');
+    const formStatusMessage = document.getElementById('formStatusMessage');
+    const formStatusIcon = document.getElementById('formStatusIcon');
+    const formStatusClose = document.getElementById('formStatusClose');
+
+    // URL de webhook de n8n (configurada por el usuario)
+    const N8N_WEBHOOK_URL = 'https://n8n.ferpipohaidas.com/webhook/ferpipohaidas-contact';
+
+
+    function showStatus({ success = true, title = '', message = '' }) {
+        formStatusTitle.textContent = title;
+        formStatusMessage.textContent = message;
+        // Reemplazar emojis por textos descriptivos
+        formStatusIcon.textContent = success ? '✓' : '✕';
+        formStatusIcon.style.color = success ? '#28a745' : '#dc3545';
+        formStatusIcon.style.fontSize = '3rem';
+        formStatus.classList.add('visible');
+        formStatus.setAttribute('aria-hidden', 'false');
+        // Focus para accesibilidad
+        formStatusClose.focus();
+    }
+
+    function hideStatus() {
+        formStatus.classList.remove('visible');
+        formStatus.setAttribute('aria-hidden', 'true');
+    }
+
+    // Notificación temporal (éxito o error)
+    function showNotification(message = '', success = true, duration = 4000) {
+        let notification = document.getElementById('successMessage');
+        if (!notification) {
+            notification = document.createElement('div');
+            notification.id = 'successMessage';
+            notification.setAttribute('aria-live', 'polite');
+            document.body.appendChild(notification);
+        }
+        
+        // Remover clase hide si existe (de notificación anterior)
+        notification.classList.remove('hide');
+        
+        notification.textContent = message;
+        notification.className = success ? 'success-message' : 'error-message';
+        notification.style.display = 'block';
+        
+        // Forzar reflow para que la animación se reinicie
+        void notification.offsetWidth;
+        
+        // Después de (duration - 300ms), añadir clase hide para animación de salida
+        setTimeout(() => {
+            notification.classList.add('hide');
+            // Finalmente ocultarla
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 300);
+        }, duration - 300);
+    }
+
+    // Cambiar estado del botón a enviado (verde)
+    function setButtonSuccess(button) {
+        if (!button) return;
+        const originalText = button.textContent;
+        button.textContent = 'Enviado';
+        button.classList.add('btn-sent');
+        button.disabled = true;
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-sent');
+            button.disabled = false;
+        }, 2500);
+    }
+
+    // Toast temporal para mensajes de éxito
+    function showToast(message = '', duration = 3000) {
+        let toast = document.getElementById('siteToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'siteToast';
+            toast.className = 'toast';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.add('visible');
+        setTimeout(() => {
+            toast.classList.remove('visible');
+        }, duration);
+    }
+
+    // Manejar cierre
+    if (formStatusClose) {
+        formStatusClose.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideStatus();
+        });
+    }
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && formStatus.classList.contains('visible')) {
+            hideStatus();
+        }
+    });
+
+    // Helper: timeout para fetch
+    function fetchWithTimeout(resource, options = {}) {
+        const { timeout = 10000 } = options;
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        return fetch(resource, { ...options, signal: controller.signal })
+            .finally(() => clearTimeout(id));
+    }
+
+    if (contactForm) {
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+
+        // Nos aseguramos que el botón use clase para spinner
+        if (submitButton) submitButton.classList.add('btn--with-spinner');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(contactForm);
+            const payload = {
+                email: formData.get('email') || '',
+                message: formData.get('message') || ''
+            };
+
+            // Validación simple: sólo email y mensaje
+            if (!payload.email || !payload.message) {
+                // Mostrar notificación de validación (o simplemente no hacer nada)
+                alert('Por favor completa tu email y tu mensaje antes de enviar.');
+                return;
+            }
+
+            // Manipular botón: desactivar y mostrar spinner (solo cambiar entre texto y spinner)
+            let spinner;
+            if (submitButton) {
+                submitButton.disabled = true;
+                spinner = document.createElement('span');
+                spinner.className = 'btn--spinner';
+                spinner.setAttribute('aria-hidden', 'true');
+                submitButton.appendChild(spinner);
+            }
+
+            try {
+                const res = await fetchWithTimeout(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    timeout: 10000
+                });
+
+                if (!res.ok) {
+                    let errText = `Respuesta inesperada del servidor (${res.status})`;
+                    try {
+                        const body = await res.json();
+                        if (body && body.message) errText = body.message;
+                    } catch (_) {}
+                    // Mostrar notificación de error
+                    showNotification(errText, false);
+                    return;
+                }
+
+                // Intentar leer mensaje del body JSON si existe
+                let successMessage = 'Tu mensaje se envió correctamente.';
+                try {
+                    const body = await res.json();
+                    if (body && body.message) successMessage = body.message;
+                } catch (_) {
+                    // noop
+                }
+
+                // Éxito: quitar spinner y cambiar botón a verde "Enviado"
+                if (spinner) spinner.remove();
+                
+                // Cambiar botón a estado éxito
+                setButtonSuccess(submitButton);
+                
+                contactForm.reset();
+            } catch (err) {
+                const isAbort = err.name === 'AbortError';
+                const errMsg = isAbort ? 'La solicitud tardó demasiado. Por favor, intenta de nuevo.' : 'No se pudo conectar con el servidor. Verifica tu conexión a internet.';
+                showNotification(errMsg, false);
+            } finally {
+                // Asegurar que spinner se elimina si quedó
+                if (submitButton) {
+                    const sp = submitButton.querySelector('.btn--spinner');
+                    if (sp) sp.remove();
+                }
+            }
+        });
+    }
 });
