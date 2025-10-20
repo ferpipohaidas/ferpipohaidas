@@ -4,33 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Página no encontrada</title>
-    <meta name="description" content="La página que buscas no existe">
+    <meta name="description" content="La página que buscas no existe - Vuelve a la página principal de Fernando Haidas">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
     <header>
-        <nav>
-            <h1><a href="/">ferpipohaidas</a></h1>
+        <nav class="navbar">
+            <div class="container">
+                <a href="/" class="logo">
+                    <span class="logo-typing">Fernando</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/#about">Sobre Mí</a></li>
+                    <li><a href="/#contact">Contacto</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
         </nav>
     </header>
     
-    <main class="error-page">
-        <div class="container">
-            <section class="error-content">
-                <h2>404</h2>
-                <h3>Página no encontrada</h3>
-                <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
-                <a href="/" class="home-link">Volver al inicio</a>
-            </section>
-        </div>
+    <main>
+        <section class="hero" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div class="container">
+                <div style="text-align: center; animation: fadeIn 1s ease-out;">
+                    <h1 style="font-size: 6rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; letter-spacing: -0.02em;">404</h1>
+                    <h2 style="font-size: 2rem; font-weight: 300; color: var(--color-muted); margin-bottom: 1.5rem; letter-spacing: 0.01em;">Página no encontrada</h2>
+                    <p style="font-size: 1.125rem; line-height: 1.8; margin-bottom: 2.5rem; color: var(--color-muted);">
+                        Lo sentimos, la página que buscas no existe o ha sido movida. 
+                        <br>Pero no te preocupes, aquí abajo encontrarás el camino de vuelta.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="/" class="btn btn-contact">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i>Volver al inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-    
-    <footer>
-        <p>&copy; 2024 ferpipohaidas. Todos los derechos reservados.</p>
-    </footer>
     
     <script src="assets/app.js"></script>
 </body>
