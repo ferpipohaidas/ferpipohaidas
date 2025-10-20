@@ -95,17 +95,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Animaciones para la sección About con Intersection Observer
     const aboutAnimations = () => {
         const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px'
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Activar animación
-                    entry.target.style.animationPlayState = 'running';
-                    // Dejar de observar
-                    observer.unobserve(entry.target);
+                    const target = entry.target;
+                    
+                    // Aplicar animación según el tipo de elemento
+                    if (target.classList.contains('about-card')) {
+                        target.style.animation = 'fadeInUp 0.8s ease-out 0.2s forwards';
+                    } else if (target.classList.contains('about-intro')) {
+                        target.style.animation = 'fadeInUp 0.8s ease-out 0.4s forwards';
+                    } else if (target.classList.contains('journey-section')) {
+                        target.style.animation = 'fadeInUp 0.8s ease-out 0.6s forwards';
+                    } else if (target.tagName === 'H3' && target.closest('.journey-section')) {
+                        // H3 dentro de journey-section
+                        target.style.animation = 'fadeInUp 0.8s ease-out 0.6s forwards';
+                    } else if (target.classList.contains('timeline-item')) {
+                        const journeySection = target.closest('.journey-section');
+                        const items = journeySection.querySelectorAll('.timeline-item');
+                        const index = Array.from(items).indexOf(target);
+                        const itemDelay = index * 0.15 + 0.8;
+                        target.style.animation = `fadeInRight 0.8s ease-out ${itemDelay}s forwards`;
+                    } else if (target.classList.contains('value-section')) {
+                        target.style.animation = 'fadeInUp 0.8s ease-out 0.8s forwards';
+                    }
+                    
+                    // Dejar de observar después de animar
+                    observer.unobserve(target);
                 }
             });
         }, observerOptions);
@@ -113,14 +133,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Observar todos los elementos animados en About
         const aboutSection = document.querySelector('#about');
         if (aboutSection) {
-            const animatedElements = aboutSection.querySelectorAll(
-                '.about-card, .about-intro p, .journey-section h3, .timeline-item, .value-section'
-            );
+            const aboutCard = aboutSection.querySelector('.about-card');
+            const aboutIntro = aboutSection.querySelector('.about-intro');
+            const journeySection = aboutSection.querySelector('.journey-section');
+            const journeyH3 = journeySection ? journeySection.querySelector('h3') : null;
+            const timelineItems = aboutSection.querySelectorAll('.timeline-item');
+            const valueSection = aboutSection.querySelector('.value-section');
             
-            animatedElements.forEach(element => {
-                element.style.animationPlayState = 'paused';
-                observer.observe(element);
-            });
+            if (aboutCard) observer.observe(aboutCard);
+            if (aboutIntro) observer.observe(aboutIntro);
+            if (journeySection) observer.observe(journeySection);
+            if (journeyH3) observer.observe(journeyH3);
+            timelineItems.forEach(item => observer.observe(item));
+            if (valueSection) observer.observe(valueSection);
         }
     };
 
