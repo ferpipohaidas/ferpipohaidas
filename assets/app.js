@@ -92,65 +92,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Animaciones para la sección About con Intersection Observer
-    const aboutAnimations = () => {
+    // Animaciones simples con Intersection Observer
+    const initScrollAnimations = () => {
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const target = entry.target;
-                    
-                    // Aplicar animación según el tipo de elemento
-                    if (target.classList.contains('about-card')) {
-                        target.style.animation = 'fadeInUp 0.8s ease-out 0.2s forwards';
-                    } else if (target.classList.contains('about-intro')) {
-                        target.style.animation = 'fadeInUp 0.8s ease-out 0.4s forwards';
-                    } else if (target.classList.contains('journey-section')) {
-                        target.style.animation = 'fadeInUp 0.8s ease-out 0.6s forwards';
-                    } else if (target.tagName === 'H3' && target.closest('.journey-section')) {
-                        // H3 dentro de journey-section
-                        target.style.animation = 'fadeInUp 0.8s ease-out 0.6s forwards';
-                    } else if (target.classList.contains('timeline-item')) {
-                        const journeySection = target.closest('.journey-section');
-                        const items = journeySection.querySelectorAll('.timeline-item');
-                        const index = Array.from(items).indexOf(target);
-                        const itemDelay = index * 0.15 + 0.8;
-                        target.style.animation = `fadeInRight 0.8s ease-out ${itemDelay}s forwards`;
-                    } else if (target.classList.contains('value-section')) {
-                        target.style.animation = 'fadeInUp 0.8s ease-out 0.8s forwards';
-                    }
-                    
-                    // Dejar de observar después de animar
-                    observer.unobserve(target);
+                    entry.target.classList.add('visible');
+                    // Dejar de observar después de hacer visible
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Observar todos los elementos animados en About
-        const aboutSection = document.querySelector('#about');
-        if (aboutSection) {
-            const aboutCard = aboutSection.querySelector('.about-card');
-            const aboutIntro = aboutSection.querySelector('.about-intro');
-            const journeySection = aboutSection.querySelector('.journey-section');
-            const journeyH3 = journeySection ? journeySection.querySelector('h3') : null;
-            const timelineItems = aboutSection.querySelectorAll('.timeline-item');
-            const valueSection = aboutSection.querySelector('.value-section');
-            
-            if (aboutCard) observer.observe(aboutCard);
-            if (aboutIntro) observer.observe(aboutIntro);
-            if (journeySection) observer.observe(journeySection);
-            if (journeyH3) observer.observe(journeyH3);
-            timelineItems.forEach(item => observer.observe(item));
-            if (valueSection) observer.observe(valueSection);
-        }
+        // Observar todos los elementos con la clase animate-on-scroll
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
     };
 
     // Inicializar animaciones
-    aboutAnimations();
+    initScrollAnimations();
 
     // --- Formulario de contacto ---
     const contactForm = document.getElementById('contactForm');
